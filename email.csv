@@ -1,0 +1,21 @@
+EmailID,Sender,Recipient,Subject,Body,Date,Category
+1,jane.doe@example.com,john.smith@example.com,Project Update,Please find the latest project updates attached.,2024-10-25,Inbox
+2,john.smith@example.com,jane.doe@example.com,Re: Project Update,Thank you for the update. I’ll review it.,2024-10-25,Inbox
+3,alice.jones@example.com,john.smith@example.com,Meeting Reminder,Just a reminder for the upcoming meeting.,2024-10-26,Inbox
+4,marketing@promo.com,jane.doe@example.com,Special Offer,Get 50% off your next purchase with us!,2024-10-26,Inbox
+5,ceo@example.com,jane.doe@example.com,Important Meeting,Please prioritize attending the board meeting on Friday.,2024-10-27,Inbox
+6,jane.doe@example.com,jane.doe@example.com,Status Report,Here is the status report you requested.,2024-10-28,Outbox
+7,john.smith@example.com,marketing@promo.com,Re: Marketing Campaign,Thank you for the marketing data.,2024-10-29,Outbox
+8,support@example.com,jane.doe@example.com,Account Assistance,I need help with my account settings.,2024-10-30,Outbox
+9,marketing@promo.com,jane.doe@example.com,Holiday Sale,Don't miss out on holiday discounts!,2024-10-31,Outbox
+10,ceo@example.com,support@example.com,New Policy,Please review the new company policy.,2024-11-01,Outbox
+11,spam@scam.com,jane.doe@example.com,Win Big!,You’ve been selected to win a prize!,2024-11-02,Spam
+12,offers@promotions.com,john.smith@example.com,Exclusive Deals,Exclusive deals inside. Don't miss out!,2024-11-03,Spam
+13,fake@newsletter.com,jane.doe@example.com,Survey Invitation,"We value your feedback, complete our survey.",2024-11-04,Spam
+14,jane.doe@example.com,support@example.com,Job Opportunity,We'd like to discuss a potential role.,2024-11-05,Spam
+15,random@unknown.com,john.smith@example.com,Unsubscribe Notice,"If you wish to unsubscribe, click here.",2024-11-06,Spam
+16,ceo@example.com,jane.doe@example.com,Quarterly Report,Find attached the quarterly report.,2024-11-07,Priority
+17,board@example.com,team@company.com,Team Feedback,Please provide feedback on recent projects.,2024-11-08,Priority
+18,manager@example.com,john.smith@example.com,Urgent,This requires immediate attention.,2024-11-09,Priority
+19,hr@example.com,all@company.com,Policy Update,Read about recent policy updates.,2024-11-10,Priority
+20,project@company.com,project@team.com,Project Milestone,Project milestone achieved - see details.,2024-11-11,Priority
