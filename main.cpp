@@ -74,7 +74,35 @@ int main() {
   EmailQueue inbox;
 
   //LOad csv file emails
-  loadEmailFromCSV("")
+  loadEmailFromCSV("email.csv", inbox,outbox);
 
+  int choice;
+  do {
+  std::cout << "Email Management System:\n";
+  std::cout << "1. View Inbox Emails\n";
+  std::cout << "2. View Outbox Emails\n";
+  std::cout << "3. Exit\n";
+  std::cout << "Enter your choice: "
+  std::cin >> choice;
+
+  switch (choice) {
+      case 1;
+        displayInbox(inbox);
+        break;
+      case 2;
+        displayOutbox(oubtbox);
+        break;
+      case 3;
+        std::cout << "Exiting the program.\n"
+        break;
+      default:
+    std::cout << "Invalid choice. Please try again.\n";
+
+    }
+  std::cout << std::endl;
+  } while (choice != 3);
+
+    
+return 0;
   
 }
