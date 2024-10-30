@@ -22,7 +22,7 @@ void loadEmailsFromCSV(const std::string& filename, EmailStack& inbox, EmailQueu
     std::getline(ss, subject, ',');
     std::getline(ss, timestamp, ',');
     std::getline(ss, priorityStr, ',');
-    priority = std::stoi(priorityStr, ',');
+    priority = std::stoi(priorityStr);
 
     Email email(sender, recepient,subject, timestamp, priority);
     // For demonstration, let's assume priority >= 2 goes to the inbox, and others go to the outbox
@@ -44,7 +44,7 @@ void displayInbox(EmailStack& inbox) {
   }
   std::cout << "Inbox Emails:\n";
   while (!inbox.isEmpty()) {
-    Email email  inbox.pop();
+    Email email = inbox.pop();
     std::cout << "From: " << email.sender << "\n"
       << "Subject: " << email.subject << "\n"
       << "Timestamp: " << email.timestamp << "\n\n";
@@ -54,13 +54,13 @@ void displayInbox(EmailStack& inbox) {
 
 //function dispalying emails in oubtbox aka sent
 void displayOutbox(EmailQueue& oubtbox) {
-  if (oubtbox.isEmpty()) {
-    std::cout << "Outbox is empty. \n";
-    retrun;
+  if (outbox.isEmpty()) {
+    std::cout << "Outbox is empty.\n";
+    return;
   }
 
   std::cout << "Outbox EMails. \n";
-  while (!oubtbox.isEmpty()) {
+  while (!outbox.isEmpty()) {
     Email email = oubtbox.dequeue();
     std::cout << "To: " << email.recepient << "\n"
       << "Subject: " <<email.subject<<"\n"
@@ -71,7 +71,7 @@ void displayOutbox(EmailQueue& oubtbox) {
 
 int main() {
   EmailStack inbox;
-  EmailQueue inbox;
+  EmailQueue outbox;
 
   //LOad csv file emails
   loadEmailFromCSV("email.csv", inbox,outbox);
@@ -82,18 +82,18 @@ int main() {
   std::cout << "1. View Inbox Emails\n";
   std::cout << "2. View Outbox Emails\n";
   std::cout << "3. Exit\n";
-  std::cout << "Enter your choice: "
+  std::cout << "Enter your choice: ";
   std::cin >> choice;
 
   switch (choice) {
-      case 1;
+      case 1:
         displayInbox(inbox);
         break;
-      case 2;
+      case 2:
         displayOutbox(oubtbox);
         break;
-      case 3;
-        std::cout << "Exiting the program.\n"
+      case 3:
+        std::cout << "Exiting the program.\n";
         break;
       default:
     std::cout << "Invalid choice. Please try again.\n";
