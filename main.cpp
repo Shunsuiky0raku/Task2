@@ -22,8 +22,17 @@ void loadEmailsFromCSV(const std::string& filename, EmailStack& inbox, EmailQueu
     std::getline(ss, subject, ',');
     std::getline(ss, timestamp, ',');
     std::getline(ss, priorityStr, ',');
-    priority = std::stoi(priorityStr);
+    try {
+      //convert priortystr to an integer
+      priority = std::stoi(priorityStr);
 
+    } catch (const std::invalid_argument& e) {
+      std::cerr << "Invaldi priority value in CSV file: " << priorityStr << std::endl;
+      continue;
+    } catch (const std::out_of_range& e) {
+      std::cerr << "Priority value out of range in CSV file: " << priorityStr << std::endl;
+      continue;
+    }
     Email email(sender, recipient,subject, timestamp, priority);
     // For demonstration, let's assume priority >= 2 goes to the inbox, and others go to the outbox
     if (priority >= 2) {
