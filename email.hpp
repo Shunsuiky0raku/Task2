@@ -3,16 +3,21 @@
 
 #include <string>
 
+
 class Email {
-  public:
+public:
+    std::string emailID;
     std::string sender;
     std::string recipient;
     std::string subject;
-    std::string timestamp;
-    int priority;
+    std::string body;
+    std::string date;
+    std::string category;
 
-    //constructor
-    Email(std::string sender, std::string recipient, std::string subject, std::string timestamp, int priority);
+    // Updated constructor to accept all 7 parameters
+    Email(std::string emailID, std::string sender, std::string recipient, std::string subject,
+          std::string body, std::string date, std::string category);
 };
 
 #endif
+
