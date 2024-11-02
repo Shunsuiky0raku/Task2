@@ -15,16 +15,16 @@ void loadEmailsFromCSV(const std::string& filename, EmailStack& inbox, EmailQueu
   }
   while (std::getline(file, line)) {
     std::stringstream ss(line);
-    std::string sender, recepient, subject, timestamp, priorityStr;
+    std::string sender, recipient, subject, timestamp, priorityStr;
     int priority;
     std::getline(ss, sender, ',');
-    std::getline(ss, recepient, ',');
+    std::getline(ss, recipient, ',');
     std::getline(ss, subject, ',');
     std::getline(ss, timestamp, ',');
     std::getline(ss, priorityStr, ',');
     priority = std::stoi(priorityStr);
 
-    Email email(sender, recepient,subject, timestamp, priority);
+    Email email(sender, recipient,subject, timestamp, priority);
     // For demonstration, let's assume priority >= 2 goes to the inbox, and others go to the outbox
     if (priority >= 2) {
       inbox.push(email);
@@ -52,8 +52,8 @@ void displayInbox(EmailStack& inbox) {
 
 }
 
-//function dispalying emails in oubtbox aka sent
-void displayOutbox(EmailQueue& oubtbox) {
+//function dispalying emails in outbox aka sent
+void displayOutbox(EmailQueue& outbox) {
   if (outbox.isEmpty()) {
     std::cout << "Outbox is empty.\n";
     return;
@@ -61,8 +61,8 @@ void displayOutbox(EmailQueue& oubtbox) {
 
   std::cout << "Outbox EMails. \n";
   while (!outbox.isEmpty()) {
-    Email email = oubtbox.dequeue();
-    std::cout << "To: " << email.recepient << "\n"
+    Email email = outbox.dequeue();
+    std::cout << "To: " << email.recipient << "\n"
       << "Subject: " <<email.subject<<"\n"
       << "Timestamp: " << email.timestamp << "\n\n";
 
@@ -74,7 +74,7 @@ int main() {
   EmailQueue outbox;
 
   //LOad csv file emails
-  loadEmailFromCSV("email.csv", inbox,outbox);
+  loadEmailsFromCSV("email.csv", inbox,outbox);
 
   int choice;
   do {
@@ -90,7 +90,7 @@ int main() {
         displayInbox(inbox);
         break;
       case 2:
-        displayOutbox(oubtbox);
+        displayOutbox(outbox);
         break;
       case 3:
         std::cout << "Exiting the program.\n";

@@ -20,7 +20,7 @@ class EmailQueue {
     EmailQueue();
     void enqueue(const Email& email);
     Email dequeue();
-    bool isEmpty;
+    bool isEmpty();
 };
 
 #endif
