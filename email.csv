@@ -1,21 +1,28 @@
-emailID,Sender,Recipient,Subject,Body,Date,Category
-1,jane.doe@example.com,john.smith@example.com,Project Update,Please find the latest project updates attached.,2024-10-25,inbox
-2,john.smith@example.com,jane.doe@example.com,Re: Project Update,Thank you for the update. I’ll review it.,2024-10-25,inbox
-3,alice.jones@example.com,john.smith@example.com,Meeting Reminder,Just a reminder for the upcoming meeting.,2024-10-26,inbox
-4,marketing@promo.com,jane.doe@example.com,Special Offer,Get 50% off your next purchase with us!,2024-10-26,inbox
-5,ceo@example.com,jane.doe@example.com,Important Meeting,Please prioritize attending the board meeting on Friday.,2024-10-27,inbox
-6,jane.doe@example.com,jane.doe@example.com,Status Report,Here is the status report you requested.,2024-10-28,outbox
-7,john.smith@example.com,marketing@promo.com,Re: Marketing Campaign,Thank you for the marketing data.,2024-10-29,outbox
-8,support@example.com,jane.doe@example.com,Account Assistance,I need help with my account settings.,2024-10-30,outbox
-9,marketing@promo.com,jane.doe@example.com,Holiday Sale,Don't miss out on holiday discounts!,2024-10-31,outbox
-10,ceo@example.com,support@example.com,New Policy,Please review the new company policy.,2024-11-01,outbox
-11,spam@scam.com,jane.doe@example.com,Win Big!,You’ve been selected to win a prize!,2024-11-02,spam
-12,offers@promotions.com,john.smith@example.com,Exclusive Deals,Exclusive deals inside. Don't miss out!,2024-11-03,spam
-13,fake@newsletter.com,jane.doe@example.com,Survey Invitation,"We value your feedback, complete our survey.",2024-11-04,spam
-14,jane.doe@example.com,support@example.com,Job Opportunity,We'd like to discuss a potential role.,2024-11-05,spam
-15,random@unknown.com,john.smith@example.com,Unsubscribe Notice,"If you wish to unsubscribe, click here.",2024-11-06,spam
-16,ceo@example.com,jane.doe@example.com,Quarterly Report,Find attached the quarterly report.,2024-11-07,priority
-17,board@example.com,team@company.com,Team Feedback,Please provide feedback on recent projects.,2024-11-08,priority
-18,manager@example.com,john.smith@example.com,Urgent,This requires immediate attention.,2024-11-09,priority
-19,hr@example.com,all@company.com,Policy Update,Read about recent policy updates.,2024-11-10,priority
-20,project@company.com,project@team.com,Project Milestone,Project milestone achieved - see details.,2024-11-11,priority
+emailID,Sender,Recipient,Subject,Body,Date,Category,
+1,jane.doe@example.com,john.smith@example.com,Project Update,Please find the latest project updates attached.,10/25/2024,all mail,
+2,james.smith@example.com,john.smith@example.com,Re: Project Update,Thank you for the update. I’ll review it.,10/25/2024,all mail,
+3,alice.jones@example.com,john.smith@example.com,Meeting Reminder,Just a reminder for the upcoming meeting.,10/26/2024,all mail,
+4,marketing@promo.com,john.smith@example.com,Special Offer,Get 50% off your next purchase with us!,10/26/2024,all mail,
+5,ceo@example.com,john.smith@example.com,Important Meeting,Please prioritize attending the board meeting on Friday.,10/27/2024,all mail,
+6,john.smith@example.com,jane.doe@example.com,Status Report,Here is the status report you requested.,10/28/2024,outbox,
+7,john.smith@example.com,marketing@promo.com,Re: Marketing Campaign,Thank you for the marketing data.,10/29/2024,outbox,
+8,john.smith@example.com,jane.doe@example.com,Account Assistance,I need help with my account settings.,10/30/2024,outbox,
+9,john.smith@example.com,jane.doe@example.com,Holiday Sale,Don't miss out on holiday discounts!,10/31/2024,outbox,
+10,john.smith@example.com,support@example.com,New Policy,Please review the new company policy.,11/1/2024,outbox, 
+11,spam@scam.com,john.smith@example.com,90% OFF Today Only,"Exclusive offer, click here!",12/1/2024,all mail,
+12,offers@promotions.com,john.smith@example.com,ACT NOW!,"Urgent, secure your spot!",9/1/20204,all mail,
+13,fake@newsletter.com,john.smith@example.com,WIN BIG $$$,You�ve won! Claim now!,11/7/2024,all mail,
+14,jane.doe@example.com,john.smith@example.com,Save $$$ Today!,Use code SAVE123 now! Limited time only!!!,11/9/2024,all mail,
+15,random@unknown.com,john.smith@example.com,Earn Extra Cash Today!,Get paid instantly. Sign up and start now!,11/20/2024,all mail,
+16,ceo@example.com,john.smith@example.com,Quarterly Report,Find attached the quarterly report.,11/7/2024,all mail,
+17,board@example.com,john.smith@example.com,Team Feedback,Please provide feedback on recent projects.,11/8/2024,all mail,
+18,manager@example.com,john.smith@example.com,Urgent,This requires immediate attention.,11/9/2024,all mail,
+19,hr@example.com,john.smith@example.com,Policy Update,Read about recent policy updates.,11/10/2024,all mail,
+20,project@company.com,john.smith@example.com,Project Milestone,Project milestone achieved - see details.,11/11/2024,all mail,
+,,,,,,,
+,,, ,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,, ,,,,,
