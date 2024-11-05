@@ -4,7 +4,8 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
-
+//DEefined target email for categorization
+const std::string TARGET_EMAIL = "john.smith@example.com";
 // Function to load emails from CSV with filtering based on category
 void loadEmailsFromCSV(const std::string& filename, EmailStack& inbox, EmailQueue& outbox) {
     std::ifstream file(filename);
@@ -29,9 +30,9 @@ void loadEmailsFromCSV(const std::string& filename, EmailStack& inbox, EmailQueu
         std::getline(ss, category, ',');
 
         // Only process emails with category "inbox" or "outbox"
-        if (category == "inbox") {
+        if (recipient == TARGET_EMAIL) {
             inbox.push(Email(emailID, sender, recipient, subject, body, date, category));
-        } else if (category == "outbox") {
+        } else if (sender == TARGET_EMAIL ) {
             outbox.enqueue(Email(emailID, sender, recipient, subject, body, date, category));
         }
     }
