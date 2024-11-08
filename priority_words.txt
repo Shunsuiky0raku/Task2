@@ -1,0 +1,65 @@
+# High Priority
+urgent
+asap
+immediate
+attention
+priority
+critical
+important
+deadline
+action required
+final notice
+response needed
+alert
+emergency
+high importance
+meeting request
+project update
+board meeting
+
+# Medium Priority
+reminder
+follow up
+meeting reminder
+update
+scheduled
+proposal
+review
+weekly report
+monthly report
+client request
+discussion
+planning
+invoice
+feedback required
+assignment
+project status
+review request
+notification
+consultation
+task update
+
+# Low Priority
+newsletter
+sale
+discount
+promotion
+event
+invitation
+social
+happy hour
+holiday
+weekend
+thank you
+fyi
+no response needed
+team building
+marketing
+offer
+free
+survey
+customer service
+special offer
+announcement
+news
+update available

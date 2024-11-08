@@ -1,0 +1,204 @@
+MY CODE PART:
+
+
+
+
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <vector>
+#include <string>
+#include <algorithm>
+#include <cctype>
+
+// Structure to store email data
+struct Email {
+    std::string id;  // Changed to string since we're not validating numeric ID
+    std::string sender;
+    std::string recipient;
+    std::string subject;
+    std::string body;
+    std::string date;
+    std::string category;
+};
+
+// Helper function to convert a string to lowercase
+std::string toLowerCase(const std::string& str) {
+    std::string lowerStr = str;
+    std::transform(lowerStr.begin(), lowerStr.end(), lowerStr.begin(), ::tolower);
+    return lowerStr;
+}
+
+// Function to trim whitespace from both ends of a string
+static inline void trim(std::string& s) {
+    s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](unsigned char ch) {
+        return !std::isspace(ch);
+        }));
+    s.erase(std::find_if(s.rbegin(), s.rend(), [](unsigned char ch) {
+        return !std::isspace(ch);
+        }).base(), s.end());
+}
+
+// Function to load spam indicators from SpamIndicator.txt
+void loadSpamIndicators(const std::string& filename, std::vector<std::string>& keywords, std::vector<std::string>& urgentPhrases, std::vector<std::string>& specialCharacters, std::vector<std::string>& suspiciousDomains) {
+    std::ifstream file(filename);
+    if (!file.is_open()) {
+        std::cerr << "Failed to open spam indicator file." << std::endl;
+        return;
+    }
+    std::cout << "Loaded SpamIndicator.txt successfully" << std::endl;
+
+    std::string line;
+    std::string section;
+    while (getline(file, line)) {
+        if (line.empty() || line[0] == '#') {
+            if (!line.empty() && line[0] == '#') {
+                section = line;
+            }
+            continue;
+        }
+        if (section == "# Keywords") {
+            keywords.push_back(toLowerCase(line));
+        }
+        else if (section == "# Urgent Phrases") {
+            urgentPhrases.push_back(toLowerCase(line));
+        }
+        else if (section == "# Special Characters") {
+            specialCharacters.push_back(toLowerCase(line));
+        }
+        else if (section == "# Suspicious Domains") {
+            suspiciousDomains.push_back(toLowerCase(line));
+        }
+    }
+    file.close();
+}
+
+// Function to load emails from email.csv
+void loadEmails(const std::string& filename, std::vector<Email>& emails) {
+    std::ifstream file(filename);
+    if (!file.is_open()) {
+        std::cerr << "Failed to open email file." << std::endl;
+        return;
+    }
+    std::cout << "Loaded email.csv successfully" << std::endl; // Confirmation message
+
+    std::string line;
+
+    // Skip the header row
+    if (getline(file, line)) {
+        // Header line is skipped without printing
+    }
+
+    while (getline(file, line)) {
+        if (line.empty()) continue; // Skip empty lines
+
+        std::istringstream ss(line);
+        Email email;
+
+        // Lambda function to handle commas within quoted fields
+        auto getField = [](std::istringstream& ss) {
+            std::string field;
+            if (getline(ss, field, ',')) {
+                if (!field.empty() && field[0] == '"') { // Check if the field starts with a quote
+                    std::string additional;
+                    while (field.back() != '"' && getline(ss, additional, ',')) {
+                        field += ',' + additional; // Concatenate the rest of the quoted field
+                    }
+                    // Remove surrounding quotes
+                    if (field.front() == '"' && field.back() == '"') {
+                        field = field.substr(1, field.size() - 2);
+                    }
+                }
+            }
+            trim(field); // Remove any leading/trailing spaces
+            return field;
+            };
+
+        // Use getField to parse each field in the line, handling quoted fields with commas
+        email.id = getField(ss);
+        email.sender = getField(ss);
+        email.recipient = getField(ss);
+        email.subject = getField(ss);
+        email.body = getField(ss);
+        email.date = getField(ss);
+        email.category = getField(ss);
+
+        emails.push_back(email);
+    }
+    file.close();
+}
+
+
+
+
+// Function to check if an email is spam
+bool isSpam(const Email& email, const std::vector<std::string>& keywords, const std::vector<std::string>& urgentPhrases, const std::vector<std::string>& specialCharacters, const std::vector<std::string>& suspiciousDomains) {
+    std::string sender = toLowerCase(email.sender);
+    std::string subject = toLowerCase(email.subject);
+    std::string body = toLowerCase(email.body);
+
+    for (const auto& domain : suspiciousDomains) {
+        if (sender.find(domain) != std::string::npos) {
+            return true;
+        }
+    }
+    for (const auto& keyword : keywords) {
+        if (subject.find(keyword) != std::string::npos || body.find(keyword) != std::string::npos) {
+            return true;
+        }
+    }
+    for (const auto& phrase : urgentPhrases) {
+        if (subject.find(phrase) != std::string::npos || body.find(phrase) != std::string::npos) {
+            return true;
+        }
+    }
+    for (const auto& special : specialCharacters) {
+        if (subject.find(special) != std::string::npos || body.find(special) != std::string::npos) {
+            return true;
+        }
+    }
+    return false;
+}
+
+// Function to display spam emails
+void displaySpamEmails(const std::vector<Email>& emails, const std::vector<std::string>& keywords, const std::vector<std::string>& urgentPhrases, const std::vector<std::string>& specialCharacters, const std::vector<std::string>& suspiciousDomains) {
+    bool spamFound = false;
+    for (const auto& email : emails) {
+        if (isSpam(email, keywords, urgentPhrases, specialCharacters, suspiciousDomains)) {
+            spamFound = true;
+            std::cout << "Spam Email ID: " << email.id << "\n"
+                << "Sender: " << email.sender << "\n"
+                << "Recipient: " << email.recipient << "\n"
+                << "Subject: " << email.subject << "\n"
+                << "Body: " << email.body << "\n"
+                << "Date: " << email.date << "\n"
+                << "-----------------------------------" << std::endl;
+        }
+    }
+    if (!spamFound) {
+        std::cout << "No spam emails found." << std::endl;
+    }
+}
+
+int main() {
+    std::vector<std::string> keywords, urgentPhrases, specialCharacters, suspiciousDomains;
+    std::vector<Email> emails;
+
+    loadSpamIndicators("C:\\Users\\HP\\Desktop\\2nd year\\DSTR\\SpamIndicator.txt", keywords, urgentPhrases, specialCharacters, suspiciousDomains);
+    loadEmails("C:\\Users\\HP\\Desktop\\2nd year\\DSTR\\email.csv", emails);
+
+    int choice;
+    do {
+        std::cout << "1. View Spam Emails\n2. Exit\nChoose an option: ";
+        std::cin >> choice;
+
+        if (choice == 1) {
+            displaySpamEmails(emails, keywords, urgentPhrases, specialCharacters, suspiciousDomains);
+        }
+        else if (choice != 2) {
+            std::cout << "Invalid option. Try again." << std::endl;
+        }
+    } while (choice != 2);
+
+    return 0;
+}
