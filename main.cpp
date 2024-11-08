@@ -1,9 +1,53 @@
 #include "emailstack.hpp"
 #include "emailqueue.hpp"
-#include "email.hpp"  // Ensure this is included to use the Email class
+#include "email.hpp"  
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <string>
+
+//WordNOde and wordlist structures to handle priority keywords
+struct WordNode {
+	std::string word;
+	WordNode* next;
+
+	WordNode(const std::string& w) : word(w), next(nullptr) {}
+}
+
+class WordList {
+	private:
+		WordNode* head;
+	public:
+		WordList() : head(nullptr) {}
+
+		// Insert a word into the list
+		 void insert(const std::string& word) {
+	        WordNode* newNode = new WordNode(word);
+       		newNode->next = head;
+        	head = newNode;
+    }
+	// Check if a word exists in the list
+    bool contains(const std::string& text) const {
+        WordNode* current = head;
+        while (current != nullptr) {
+            if (text.find(current->word) != std::string::npos) {
+                return true;
+            }
+            current = current->next;
+        }
+        return false;
+    }
+
+    ~WordList() {
+        while (head != nullptr) {
+            WordNode* temp = head;
+            head = head->next;
+            delete temp;
+        }
+    }
+};
+
+
 //DEefined target email for categorization
 const std::string TARGET_EMAIL = "john.smith@example.com";
 // Function to load emails from CSV with filtering based on category
