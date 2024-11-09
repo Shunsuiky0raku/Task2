@@ -10,12 +10,15 @@ private:
     EmailStack inbox, highPriority, mediumPriority, lowPriority, spamEmails;
     EmailQueue outbox;
     WordList highPriorityWords, mediumPriorityWords, lowPriorityWords, spamWords;
-
+    WordList spamKeywords;
+    WordList urgentPhrases;
+    WordList specialCharacters;
+    WordList suspiciousDomains;
 public:
     void loadPriorityWords(const std::string& filePath);
     void loadSpamWords(const std::string& filePath); 
     int determinePriority(const std::string& text);
-    bool isSpam(const std::string& text);  
+    bool isSpam(const Email& email);  
     void loadEmailsFromCSV(const std::string& filename);
     void displayPriorityEmails();
     void displayInbox();

@@ -27,10 +27,16 @@ void EmailList::loadSpamWords(const std::string& filePath) {
         return;
     }
 
-    std::string word;
-    while (std::getline(file, word)) {
-        if (!word.empty()) {
-            spamWords.insert(word);
+    std::string line;
+    WordList* currentList = nullptr;
+
+    while (std::getline(file, line)) {
+      if (line == "# Keywords") currentList = &spamKeywords;
+      else if (line == "# Urgent Phrases") currentList = &urgentPhrases;
+       else if (line == "# Special Characters") currentList = &specialCharacters;
+        else if (line == "# Suspicious Domains") currentList = &suspiciousDomains;
+        else if (!line.empty() && currentList) {
+            currentList->insert(line);
         }
     }
 }
@@ -42,10 +48,21 @@ int EmailList::determinePriority(const std::string& text) {
     return 3;
 }
 
-bool EmailList::isSpam(const std::string& text) {
-    return spamWords.contains(text);
-}
+bool EmailList::isSpam(const Email& email) {
+    std::string combinedText = email.subject + " " + email.body;
+    
+    // Check if the sender is from a suspicious domain
+    if (suspiciousDomains.contains(email.sender)) {
+        return true;
+    }
+    
+    // Check for keywords, urgent phrases, or special characters in the subject and body
+    if (spamKeywords.contains(combinedText) || urgentPhrases.contains(combinedText) || specialCharacters.contains(combinedText)) {
+        return true;
+    }
 
+    return false;
+}
 void EmailList::loadEmailsFromCSV(const std::string& filename) {
     std::ifstream file(filename);
     std::string line;
@@ -69,7 +86,7 @@ void EmailList::loadEmailsFromCSV(const std::string& filename) {
         int priority = determinePriority(email.subject + " " + email.body);
 
         // Check if email is spam
-        if (isSpam(email.subject + " " + email.body)) {
+        if (isSpam(email)) {
             spamEmails.push(email);
             continue;
         }
