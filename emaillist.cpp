@@ -101,7 +101,7 @@ void EmailList::displayStack(const std::string& title, EmailStack& stack) {
     std::cout << "\n" << title << ":\n";
     while (!stack.isEmpty()) {
         Email email = stack.pop();
-        std::cout << "Sender: " << email.sender << ", Subject: " << email.subject << ", Date: " << email.date << "\n";
+        std::cout << "Sender: " << email.sender << ", Subject: " << email.subject << "Body: " << email.body << ", Date: " << email.date << "\n";
     }
 }
 
@@ -109,6 +109,6 @@ void EmailList::displayQueue(const std::string& title, EmailQueue& queue) {
     std::cout << "\n" << title << ":\n";
     while (!queue.isEmpty()) {
         Email email = queue.dequeue();
-        std::cout << "Recipient: " << email.recipient << ", Subject: " << email.subject << ", Date: " << email.date << "\n";
+        std::cout << "Recipient: " << email.recipient << ", Subject: " << email.subject << "Body: " << email.body << ", Date: " << email.date << "\n";
     }
 }
