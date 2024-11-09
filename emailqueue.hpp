@@ -2,28 +2,21 @@
 #define emailqueue_hpp
 
 #include "email.hpp"
-
-class QueueNode {
-  public:
+ struct QueueNode {
     Email email;
     QueueNode* next;
-
-    QueueNode(Email email);
+    QueueNode(const Email& email) : email(email), next(nullptr) {}
 };
 
 class EmailQueue {
-  private:
+private:
     QueueNode* front;
     QueueNode* rear;
-
-  public:
-    EmailQueue();
+public:
+    EmailQueue() : front(nullptr), rear(nullptr) {}
     void enqueue(const Email& email);
     Email dequeue();
-    bool isEmpty();
+    bool isEmpty() const;
 };
 
-#endif
-
-
-
+#endif // emailqueue_hpp

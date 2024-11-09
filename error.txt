@@ -1,0 +1,102 @@
+emaillist.cpp: In member function ‘void EmailList::loadEmailsFromCSV(const std::string&)’:
+emaillist.cpp:61:15: error: no matching function for call to ‘Email::Email()’
+   61 |         Email email;
+      |               ^~~~~
+emaillist.cpp: In member function ‘void EmailList::loadEmailsFromCSV(const std::string&)’:
+emaillist.cpp:61:15: error: no matching function for call to ‘Email::Email()’
+   61 |         Email email;
+      |               ^~~~~
+In file included from emailstack.hpp:4,
+                 from emaillist.hpp:3,
+                 from emaillist.cpp:1:
+email.hpp:18:5: note: candidate: ‘Email::Email(std::string, std::string, std::string, std::string, std::string, std::string, std::string)’
+   18 |     Email(std::string emailID, std::string sender, std::string recipient, std::string subject,
+      |     ^~~~~
+In file included from emailstack.hpp:4,
+                 from emaillist.hpp:3,
+                 from emaillist.cpp:1:
+email.hpp:18:5: note: candidate: ‘Email::Email(std::string, std::string, std::string, std::string, std::string, std::string, std::string)’
+   18 |     Email(std::string emailID, std::string sender, std::string recipient, std::string subject,
+      |     ^~~~~
+email.hpp:18:5: note:   candidate expects 7 arguments, 0 provided
+email.hpp:18:5: note:   candidate expects 7 arguments, 0 provided
+email.hpp:7:7: note: candidate: ‘Email::Email(const Email&)’
+    7 | class Email {
+      |       ^~~~~
+email.hpp:7:7: note: candidate: ‘Email::Email(const Email&)’
+    7 | class Email {
+      |       ^~~~~
+email.hpp:7:7: note:   candidate expects 1 argument, 0 provided
+email.hpp:7:7: note:   candidate expects 1 argument, 0 provided
+email.hpp:7:7: note: candidate: ‘Email::Email(Email&&)’
+email.hpp:7:7: note: candidate: ‘Email::Email(Email&&)’
+email.hpp:7:7: note:   candidate expects 1 argument, 0 provided
+email.hpp:7:7: note:   candidate expects 1 argument, 0 provided
+emaillist.cpp:62:32: error: ‘class Email’ has no member named ‘id’
+   62 |         std::getline(ss, email.id, ',');
+      |                                ^~
+emaillist.cpp:62:32: error: ‘class Email’ has no member named ‘id’
+   62 |         std::getline(ss, email.id, ',');
+      |                                ^~
+emaillist.cpp: In member function ‘void EmailList::displayPriorityEmails()’:
+emaillist.cpp:89:5: error: ‘displayStack’ was not declared in this scope
+   89 |     displayStack("High Priority Emails", highPriority);
+      |     ^~~~~~~~~~~~
+emaillist.cpp: In member function ‘void EmailList::displayPriorityEmails()’:
+emaillist.cpp:89:5: error: ‘displayStack’ was not declared in this scope
+   89 |     displayStack("High Priority Emails", highPriority);
+      |     ^~~~~~~~~~~~
+emaillist.cpp: In member function ‘void EmailList::displaySpamEmails()’:
+emaillist.cpp:95:5: error: ‘displayStack’ was not declared in this scope
+   95 |     displayStack("Spam Emails", spamEmails);
+      |     ^~~~~~~~~~~~
+emaillist.cpp: In member function ‘void EmailList::displaySpamEmails()’:
+emaillist.cpp:95:5: error: ‘displayStack’ was not declared in this scope
+   95 |     displayStack("Spam Emails", spamEmails);
+      |     ^~~~~~~~~~~~
+emaillist.cpp: In member function ‘void EmailList::displayInbox()’:
+emaillist.cpp:98:34: error: ‘displayStack’ was not declared in this scope
+   98 | void EmailList::displayInbox() { displayStack("Inbox", inbox); }
+      |                                  ^~~~~~~~~~~~
+emaillist.cpp: In member function ‘void EmailList::displayInbox()’:
+emaillist.cpp:98:34: error: ‘displayStack’ was not declared in this scope
+   98 | void EmailList::displayInbox() { displayStack("Inbox", inbox); }
+      |                                  ^~~~~~~~~~~~
+emaillist.cpp: In member function ‘void EmailList::displayOutbox()’:
+emaillist.cpp:99:35: error: ‘displayQueue’ was not declared in this scope
+   99 | void EmailList::displayOutbox() { displayQueue("Outbox", outbox); }
+      |                                   ^~~~~~~~~~~~
+emaillist.cpp: In member function ‘void EmailList::displayOutbox()’:
+emaillist.cpp:99:35: error: ‘displayQueue’ was not declared in this scope
+   99 | void EmailList::displayOutbox() { displayQueue("Outbox", outbox); }
+      |                                   ^~~~~~~~~~~~
+emaillist.cpp: At global scope:
+emaillist.cpp:101:6: error: no declaration matches ‘void EmailList::displayStack(const std::string&, EmailStack&)’
+  101 | void EmailList::displayStack(const std::string& title, EmailStack& stack) {
+      |      ^~~~~~~~~
+emaillist.cpp:101:6: note: no functions named ‘void EmailList::displayStack(const std::string&, EmailStack&)’
+emaillist.cpp: At global scope:
+emaillist.cpp:101:6: error: no declaration matches ‘void EmailList::displayStack(const std::string&, EmailStack&)’
+  101 | void EmailList::displayStack(const std::string& title, EmailStack& stack) {
+      |      ^~~~~~~~~
+emaillist.cpp:101:6: note: no functions named ‘void EmailList::displayStack(const std::string&, EmailStack&)’
+emaillist.hpp:8:7: note: ‘class EmailList’ defined here
+    8 | class EmailList {
+      |       ^~~~~~~~~
+emaillist.hpp:8:7: note: ‘class EmailList’ defined here
+    8 | class EmailList {
+      |       ^~~~~~~~~
+emaillist.cpp:109:6: error: no declaration matches ‘void EmailList::displayQueue(const std::string&, EmailQueue&)’
+  109 | void EmailList::displayQueue(const std::string& title, EmailQueue& queue) {
+      |      ^~~~~~~~~
+emaillist.cpp:109:6: note: no functions named ‘void EmailList::displayQueue(const std::string&, EmailQueue&)’
+emaillist.hpp:8:7: note: ‘class EmailList’ defined here
+    8 | class EmailList {
+      |       ^~~~~~~~~
+emaillist.cpp:109:6: error: no declaration matches ‘void EmailList::displayQueue(const std::string&, EmailQueue&)’
+  109 | void EmailList::displayQueue(const std::string& title, EmailQueue& queue) {
+      |      ^~~~~~~~~
+emaillist.cpp:109:6: note: no functions named ‘void EmailList::displayQueue(const std::string&, EmailQueue&)’
+emaillist.hpp:8:7: note: ‘class EmailList’ defined here
+    8 | class EmailList {
+      |       ^~~~~~~~~

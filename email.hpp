@@ -14,10 +14,17 @@ public:
     std::string date;
     std::string category;
 
-    // Updated constructor to accept all 7 parameters
-    Email(std::string emailID, std::string sender, std::string recipient, std::string subject,
-          std::string body, std::string date, std::string category);
+// Constructor with parameters
+    Email(std::string emailID, std::string sender, std::string recipient,
+          std::string subject, std::string body, std::string date, std::string category)
+        : emailID(emailID), sender(sender), recipient(recipient), subject(subject),
+          body(body), date(date), category(category) {}
+
+    // Default constructor
+    Email() : emailID(""), sender(""), recipient(""), subject(""),
+              body(""), date(""), category("") {}
 };
 
-#endif
+#endif // email_hpp
+
 
