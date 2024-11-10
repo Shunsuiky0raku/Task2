@@ -20,6 +20,24 @@ void EmailList::loadPriorityWords(const std::string& filePath) {
         else if (!line.empty() && currentList) currentList->insert(line);
     }
 }
+// Helper function to split a string by spaces (simple manual split function)
+void splitWords(const std::string& str, std::string words[], int& wordCount) {
+    wordCount = 0;
+    std::string currentWord;
+    for (char c : str) {
+        if (c == ' ') {
+            if (!currentWord.empty()) {
+                words[wordCount++] = currentWord;
+                currentWord = "";
+            }
+        } else {
+            currentWord += (c >= 'A' && c <= 'Z') ? c + 32 : c; // Convert to lowercase manually
+        }
+    }
+    if (!currentWord.empty()) {
+        words[wordCount++] = currentWord;
+    }
+}
 
 void EmailList::loadSpamWords(const std::string& filePath) {
     std::ifstream file(filePath);
@@ -41,28 +59,59 @@ int EmailList::determinePriority(const std::string& text) {
     if (highPriorityWords.contains(text)) return 1;
     if (mediumPriorityWords.contains(text)) return 2;
     if (lowPriorityWords.contains(text)) return 3;
-    return 3;
+    return 0;
 }
-  bool EmailList::isSpam(const Email& email) {
+// Helper function to convert a string to lowercase without using built-in libraries
+std::string toLower(const std::string& str) {
+    std::string result;
+    for (char c : str) {
+        // Convert uppercase letters (ASCII A-Z) to lowercase by adding 32 to their ASCII values
+        if (c >= 'A' && c <= 'Z') {
+            result += c + 32;
+        } else {
+            result += c;
+        }
+    }
+    return result;
+}
+// Function to determine spam level based on keywords
+int EmailList::determineSpamLevel(const std::string& text) {
+    // High Spam Keywords
+    std::string highSpamWords[] = {"urgent action required", "free gift", "claim your reward", "limited time offer"};
+    for (const auto& word : highSpamWords) {
+        if (text.find(word) != std::string::npos) return 3;  // High spam level
+    }
+
+    // Medium Spam Keywords
+    std::string mediumSpamWords[] = {"exclusive discount", "special offer", "promotion", "cash prize"};
+    for (const auto& word : mediumSpamWords) {
+        if (text.find(word) != std::string::npos) return 2;  // Medium spam level
+    }
+
+    // Low Spam Keywords
+    std::string lowSpamWords[] = {"team building", "event invitation", "sale", "social event"};
+    for (const auto& word : lowSpamWords) {
+        if (text.find(word) != std::string::npos) return 1;  // Low spam level
+    }
+
+    return 0; // Not spam
+}
+
+// Updated isSpam function to check for spam level
+bool EmailList::isSpam(const Email& email) {
     std::string combinedText = email.subject + " " + email.body;
-    
-    // Extract only the domain from the sender's email
-    size_t atPos = email.sender.find('@');
-    std::string senderDomain = (atPos != std::string::npos) ? email.sender.substr(atPos + 1) : "";
 
-    // Check if the sender's domain is in the suspicious domains
-    if (suspiciousDomains.contains(senderDomain)) {
-        std::cout << "Spam detected based on suspicious domain: " << email.sender << std::endl;
+    // Determine spam level based on the combined text
+    int spamLevel = determineSpamLevel(combinedText);
+
+    if (spamLevel > 0) {
+        spamEmails.push(email);
+        std::cout << "Email flagged as spam with level " << spamLevel << ": " << email.subject << "\n";
         return true;
+    } else {
+        std::cout << "No spam keywords found in this email.\n";
+        return false;
     }
-
-    // Check if the combined subject and body contain any spam keywords
-    if (spamKeywords.contains(combinedText)) {
-        std::cout << "Spam detected based on keyword in content: " << combinedText << std::endl;
-        return true;
-    }
-
-    return false;
 }
 void EmailList::searchEmails(const std::string& keyword) const {
     bool found = false;
@@ -140,7 +189,12 @@ void EmailList::displayPriorityEmails() {
 }
 
 void EmailList::displaySpamEmails() {
-    displayStack("Spam Emails", spamEmails);
+    if (spamEmails.isEmpty()) {
+        std::cout << "No spam emails detected.\n";
+        return;
+    }
+    std::cout << "Displaying spam emails:\n";
+    displayStack("Spam Emails", spamEmails);  // Assuming displayStack is your display function
 }
 
 void EmailList::displayInbox() { displayStack("Inbox", inbox); }

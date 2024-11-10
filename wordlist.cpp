@@ -1,28 +1,31 @@
 #include "wordlist.hpp"
-
 // Insert a word into the list
 void WordList::insert(const std::string& word) {
-    WordNode* newNode = new WordNode(word);
-    newNode->next = head;
-    head = newNode;
+    // Only add non-empty keywords
+    if (!word.empty() && wordCount < 100) {
+        words[wordCount++] = word;
+    }
 }
 
-// Check if a word exists in the list
+// Get the size of the list
+int WordList::getSize() const {
+    return wordCount;
+}
+
+// Get a word at a specific index
+std::string WordList::get(int index) const {
+    if (index >= 0 && index < wordCount) {
+        return words[index];
+    }
+    return "";
+}
+
+// Check if a word is contained in the list
 bool WordList::contains(const std::string& text) const {
-    WordNode* current = head;
-    while (current) {
-        if (text.find(current->word) != std::string::npos) return true;
-        current = current->next;
+    for (int i = 0; i < wordCount; i++) {
+        if (words[i] == text) {
+            return true;
+        }
     }
     return false;
 }
-
-// Destructor to free memory
-WordList::~WordList() {
-    while (head) {
-        WordNode* temp = head;
-        head = head->next;
-        delete temp;
-    }
-}
-

@@ -6,6 +6,7 @@
 #include <string>
 
 class EmailList {
+
 private:
     EmailStack inbox, highPriority, mediumPriority, lowPriority, spamEmails;
     EmailQueue outbox;
@@ -28,6 +29,8 @@ public:
     // Add display helper methods
     void displayStack(const std::string& title, EmailStack& stack);
     void displayQueue(const std::string& title, EmailQueue& queue);
+     int determineSpamLevel(const std::string& text); // Declaration for spam level function
+
 };
 
 #endif //emaillist_hpp

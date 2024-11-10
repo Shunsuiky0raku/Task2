@@ -11,13 +11,18 @@ struct WordNode {
 
 class WordList {
 private:
-    WordNode* head;
-public:
-    WordList() : head(nullptr) {}
-    void insert(const std::string& word);
-    bool contains(const std::string& text) const;
-    ~WordList();
-};
+    std::string words[100];  // Array for storing up to 100 keywords
+    int wordCount;
 
+public:
+    WordList() : wordCount(0) {}
+
+    void insert(const std::string& word);
+    int getSize() const;
+    std::string get(int index) const;
+
+    // New method to check if a word is contained in the list
+    bool contains(const std::string& text) const;
+};
 #endif // WORDLIST_HPP
 
