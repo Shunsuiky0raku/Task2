@@ -3,20 +3,23 @@
 
 #include "email.hpp"
 
-struct StackNode {
-  Email email;
-  StackNode* next;
-  StackNode(const Email& email) : email(email), next(nullptr) {}
-};
 
 class EmailStack {
 private:
-  StackNode* top;
+  struct Node {
+    Email email;
+    Node* next;
+  };
+  Node* top;
 public:
   EmailStack() : top(nullptr) {}
+  ~EmailStack();
+
   void push(const Email& email);
   Email pop();
   bool isEmpty() const;
+
+  Email* getEmails(int& count) const;
 };
 
 #endif //emailstack_hpp

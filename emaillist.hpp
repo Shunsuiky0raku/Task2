@@ -20,6 +20,7 @@ public:
     int determinePriority(const std::string& text);
     bool isSpam(const Email& email);  
     void loadEmailsFromCSV(const std::string& filename);
+    void searchEmails(const std:: string& keyword) const;
     void displayPriorityEmails();
     void displayInbox();
     void displayOutbox();

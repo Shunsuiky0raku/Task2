@@ -1,22 +1,28 @@
-#ifndef emailqueue_hpp
-#define emailqueue_hpp
+#ifndef EMAILQUEUE_HPP
+#define EMAILQUEUE_HPP
 
 #include "email.hpp"
- struct QueueNode {
-    Email email;
-    QueueNode* next;
-    QueueNode(const Email& email) : email(email), next(nullptr) {}
-};
 
 class EmailQueue {
 private:
-    QueueNode* front;
-    QueueNode* rear;
+    struct Node {
+        Email email;
+        Node* next;
+    };
+    Node* front;
+    Node* rear;
+
 public:
     EmailQueue() : front(nullptr), rear(nullptr) {}
+    ~EmailQueue();
+
     void enqueue(const Email& email);
-    Email dequeue();
     bool isEmpty() const;
+    Email dequeue();
+
+    // New method to retrieve all emails
+    Email* getEmails(int& count) const;
 };
 
-#endif // emailqueue_hpp
+#endif // EMAILQUEUE_HPP
+

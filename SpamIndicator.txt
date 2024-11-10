@@ -1,62 +1,15 @@
 # Keywords
-offer
+monthly newsletter
+team building
+exclusive discount
+weekend sale
+social event
+holiday sale
+special offer
+invitation
+promotion
 discount
 free
-winner
-cash
-limited
-prize
-deal
-promotion
-save
-clearance
-exclusive
-bonus
-gift
-reward
+offer
+event
 
-# Urgent Phrases
-get paid
-act now
-limited time
-urgent
-respond immediately
-don’t miss out
-only today
-secure your spot
-last chance
-immediate response
-limited availability
-act fast
-expires soon
-urgent response needed
-final notice
-time-sensitive
-
-# Special Characters
-$$$
-###
-!!!
-***
-@@@
-%%%
-!!!
-@##
-@@@
-
-# Suspicious Domains
-promo.com
-deals.com
-offers.net
-rewards.org
-mailers.xyz
-clickhere.biz
-sales.info
-newsletter.club
-noreply@promo
-noreply@deals
-spamdomain.com
-scamoffers.net
-freesamples.biz
-clickreward.com
-notifications.mailer
