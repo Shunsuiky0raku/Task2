@@ -74,42 +74,50 @@ std::string toLower(const std::string& str) {
     }
     return result;
 }
-// Function to determine spam level based on keywords
-int EmailList::determineSpamLevel(const std::string& text) {
-    // High Spam Keywords
-    std::string highSpamWords[] = {"urgent action required", "free gift", "claim your reward", "limited time offer"};
-    for (const auto& word : highSpamWords) {
-        if (text.find(word) != std::string::npos) return 3;  // High spam level
-    }
-
-    // Medium Spam Keywords
-    std::string mediumSpamWords[] = {"exclusive discount", "special offer", "promotion", "cash prize"};
-    for (const auto& word : mediumSpamWords) {
-        if (text.find(word) != std::string::npos) return 2;  // Medium spam level
-    }
-
-    // Low Spam Keywords
-    std::string lowSpamWords[] = {"team building", "event invitation", "sale", "social event"};
-    for (const auto& word : lowSpamWords) {
-        if (text.find(word) != std::string::npos) return 1;  // Low spam level
-    }
-
-    return 0; // Not spam
-}
+// Hardcoded spam phrases with different levels of "spamminess"
+std::string highSpamWords[] = {"urgent action required", "free gift", "claim your reward", "limited time offer"};
+std::string mediumSpamWords[] = {"exclusive discount", "special offer", "promotion", "cash prize"};
+std::string lowSpamWords[] = {"team building", "event invitation", "sale", "social event"};
 
 // Updated isSpam function to check for spam level
 bool EmailList::isSpam(const Email& email) {
     std::string combinedText = email.subject + " " + email.body;
+    int spamScore = 0;
 
-    // Determine spam level based on the combined text
-    int spamLevel = determineSpamLevel(combinedText);
+    // Debugging output for initial email subject and body
+    std::cout << "Checking email for spam:\nSubject: " << email.subject << "\nBody: " << email.body << "\n";
 
-    if (spamLevel > 0) {
+    // High spam level detection
+    for (const auto& word : highSpamWords) {
+        if (combinedText.find(word) != std::string::npos) {
+            std::cout << "High-level spam keyword detected: " << word << "\n";
+            spamScore += 3;
+        }
+    }
+
+    // Medium spam level detection
+    for (const auto& word : mediumSpamWords) {
+        if (combinedText.find(word) != std::string::npos) {
+            std::cout << "Medium-level spam keyword detected: " << word << "\n";
+            spamScore += 2;
+        }
+    }
+
+    // Low spam level detection
+    for (const auto& word : lowSpamWords) {
+        if (combinedText.find(word) != std::string::npos) {
+            std::cout << "Low-level spam keyword detected: " << word << "\n";
+            spamScore += 1;
+        }
+    }
+
+    // Determine if the email is spam based on the accumulated spam score
+    if (spamScore >= 3) { // Threshold can be adjusted
         spamEmails.push(email);
-        std::cout << "Email flagged as spam with level " << spamLevel << ": " << email.subject << "\n";
+        std::cout << "Email flagged as spam. Spam Score: " << spamScore << "\n";
         return true;
     } else {
-        std::cout << "No spam keywords found in this email.\n";
+        std::cout << "No spam keywords found in this email. Spam Score: " << spamScore << "\n";
         return false;
     }
 }
