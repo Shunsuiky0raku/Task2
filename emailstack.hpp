@@ -22,4 +22,4 @@ public:
   Email* getEmails(int& count) const;
 };
 
-#endif //emailstack_hpp
+#endif 

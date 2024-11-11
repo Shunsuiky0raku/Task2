@@ -15,7 +15,7 @@ void EmailStack::push(const Email& email) {
 
 // Pop email from stack
 Email EmailStack::pop() {
-    if (isEmpty()) return {}; // Return empty email if stack is empty
+    if (isEmpty()) return {}; 
     
     Node* node = top;
     Email email = node->email;
@@ -24,17 +24,14 @@ Email EmailStack::pop() {
     return email;
 }
 
-// Check if stack is empty
 bool EmailStack::isEmpty() const {
     return top == nullptr;
 }
 
-// Retrieve all emails as an array
 Email* EmailStack::getEmails(int& count) const {
     count = 0;
     Node* current = top;
 
-    // Count number of emails
     while (current != nullptr) {
         count++;
         current = current->next;
@@ -44,7 +41,6 @@ Email* EmailStack::getEmails(int& count) const {
     current = top;
     int index = 0;
 
-    // Store emails in array
     while (current != nullptr) {
         emails[index++] = current->email;
         current = current->next;

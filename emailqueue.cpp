@@ -20,7 +20,7 @@ void EmailQueue::enqueue(const Email& email) {
 
 // Dequeue email from queue
 Email EmailQueue::dequeue() {
-    if (isEmpty()) return {}; // Return empty email if queue is empty
+    if (isEmpty()) return {}; 
     
     Node* node = front;
     Email email = node->email;
@@ -42,7 +42,6 @@ Email* EmailQueue::getEmails(int& count) const {
     count = 0;
     Node* current = front;
 
-    // Count number of emails
     while (current != nullptr) {
         count++;
         current = current->next;

@@ -20,9 +20,7 @@ public:
     bool isEmpty() const;
     Email dequeue();
 
-    // New method to retrieve all emails
     Email* getEmails(int& count) const;
 };
 
-#endif // EMAILQUEUE_HPP
-
+#endif 

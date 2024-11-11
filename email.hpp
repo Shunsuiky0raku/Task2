@@ -23,5 +23,5 @@ public:
           std::string subject, std::string body, std::string date, std::string category);
 };
 
-#endif // EMAIL_HPP
+#endif 
 

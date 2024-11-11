@@ -17,14 +17,12 @@ private:
 public:
     WordList() : head(nullptr) {}
 
-    // Insert a word into the list
     void insert(const std::string& word) {
         WordNode* newNode = new WordNode(word);
         newNode->next = head;
         head = newNode;
     }
 
-    // Check if a word exists in the list
     bool contains(const std::string& text) const {
         WordNode* current = head;
         while (current != nullptr) {
@@ -100,18 +98,15 @@ public:
     // Check for priority level based on words in subject or body
     int determinePriority(const std::string& text) {
         if (highPriorityWords.contains(text)) {
-            return 1; // High priority
-        }
+            return 1;         }
         if (mediumPriorityWords.contains(text)) {
-            return 2; // Medium priority
-        }
+            return 2;         }
         if (lowPriorityWords.contains(text)) {
-            return 3; // Low priority
+            return 3; 
         }
         return 3; // Default to low priority if no matches
     }
 
-    // Helper function to check if a string is numeric
     bool isNumeric(const std::string& str) {
         for (char const& c : str) {
             if (!std::isdigit(c)) return false;
@@ -175,14 +170,13 @@ public:
                 continue;  // Skip to the next line if ID is not numeric
             }
 
-            std::getline(s, sender, ',');  // Parse Sender
-            std::getline(s, word, ',');  // Skip Recipient
-            std::getline(s, subject, ',');  // Parse Subject
-            std::getline(s, body, ',');  // Parse Body
-            std::getline(s, date, ',');  // Parse Date
-            std::getline(s, word, ',');  // Skip Category
+            std::getline(s, sender, ',');
+            std::getline(s, word, ',');  
+            std::getline(s, subject, ',');
+            std::getline(s, body, ',');  
+            std::getline(s, date, ',');  
+            std::getline(s, word, ',');  
 
-            // Determine priority based on keywords in subject or body
             priority = determinePriority(subject + " " + body);
 
             insertEmail(id, sender, subject, body, priority, date);
@@ -234,13 +228,10 @@ public:
 int main() {
     EmailList emailList;
 
-    // Load priority words from text file
-    emailList.loadPriorityWords("C:\\Users\\User\\Desktop\\priority_words.txt");
+    emailList.loadPriorityWords("priority_words.txt");
 
-    // Load emails from CSV file
-    emailList.loadFromCSV("C:\\Users\\User\\Desktop\\email.csv");
+    emailList.loadFromCSV("email.csv");
 
-    // Display sorted emails by priority level
     emailList.displayEmails();
 
     return 0;

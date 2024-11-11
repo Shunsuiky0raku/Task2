@@ -21,8 +21,7 @@ public:
     int getSize() const;
     std::string get(int index) const;
 
-    // New method to check if a word is contained in the list
     bool contains(const std::string& text) const;
 };
-#endif // WORDLIST_HPP
+#endif 
 
