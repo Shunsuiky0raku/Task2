@@ -5,23 +5,13 @@
 
 class Email {
 public:
-    std::string emailID;
-    std::string sender;
-    std::string recipient;
-    std::string subject;
-    std::string body;
-    std::string date;
-    std::string category;
+    std::string emailID, sender, recipient, subject, body, date, category;
 
-    // Default constructor
-    Email() 
-        : emailID(""), sender(""), recipient(""), subject(""),
-          body(""), date(""), category("") {}
-
-    // Parameterized constructor
+    // Adjust the constructor to accept only 5 arguments if that's what's required.
     Email(std::string emailID, std::string sender, std::string recipient,
-          std::string subject, std::string body, std::string date, std::string category);
+          std::string subject, std::string body, std::string date)
+        : emailID(emailID), sender(sender), recipient(recipient), subject(subject),
+          body(body), date(date), category("") {}
 };
-
 #endif 
 

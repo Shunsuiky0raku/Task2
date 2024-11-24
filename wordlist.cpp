@@ -1,7 +1,7 @@
 #include "wordlist.hpp"
+
 // Insert a word into the list
 void WordList::insert(const std::string& word) {
-    // Only add non-empty keywords
     if (!word.empty() && wordCount < 100) {
         words[wordCount++] = word;
     }
