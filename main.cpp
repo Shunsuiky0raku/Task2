@@ -5,7 +5,7 @@ int main() {
     EmailList emailList;
 
     emailList.loadPriorityWords("priority_words.txt");
-    emailList.loadSpamWords("SpamIndicator.txt");
+  //    emailList.loadSpamWords("SpamIndicator.txt");
     emailList.loadEmailsFromCSV("email.csv");
 
     int choice;

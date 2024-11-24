@@ -15,21 +15,25 @@ private:
     WordList urgentPhrases;
     WordList specialCharacters;
     WordList suspiciousDomains;
+
 public:
     void loadPriorityWords(const std::string& filePath);
-    void loadSpamWords(const std::string& filePath); 
+    void loadSpamWords(const std::string& filePath);
     int determinePriority(const std::string& text);
-    bool isSpam(const Email& email);  
+    bool isSpam(const Email& email);
     void loadEmailsFromCSV(const std::string& filename);
-    void searchEmails(const std:: string& keyword) const;
+    void searchEmails(const std::string& keyword) const;
     void displayPriorityEmails();
     void displayInbox();
     void displayOutbox();
-    void displaySpamEmails(); 
+    void displaySpamEmails();
     void displayStack(const std::string& title, EmailStack& stack);
     void displayQueue(const std::string& title, EmailQueue& queue);
-     int determineSpamLevel(const std::string& text); 
-
+    int determineSpamLevel(const std::string& text);
+    void insertSpamEmail(const Email& email);
+    // Add the deduplicateSpamEmails declaration
+    void deduplicateSpamEmails();
 };
 
-#endif 
+#endif
+

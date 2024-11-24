@@ -27,4 +27,3 @@ emailID,sender,recipient,subject,body,date,category
 38,marketing@company.com,john.smith@example.com,Exclusive Discount for Weekend Sale!,Enjoy a special discount on all items this weekend.,2024-11-05,inbox
 39,promotions@company.com,john.smith@example.com,Social Event Invitation,Join us for a happy hour social event.,2024-11-05,inbox
 40,offers@company.com,john.smith@example.com,Holiday Sale - Special Offer!,Don’t miss our holiday sale with exclusive offers!,2024-11-05,inbox
-
