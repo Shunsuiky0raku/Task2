@@ -6,7 +6,7 @@
 void EmailList::loadPriorityWords(const std::string& filePath) {
     std::ifstream file(filePath);
     if (!file.is_open()) {
-        std::cerr << "Failed to open priority words file!" << std::endl;
+        std::cerr << "Error: Could not open priority words file!\n";
         return;
     }
 
@@ -14,29 +14,49 @@ void EmailList::loadPriorityWords(const std::string& filePath) {
     WordList* currentList = nullptr;
 
     while (std::getline(file, line)) {
-        if (line == "# High Priority") currentList = &highPriorityWords;
-        else if (line == "# Medium Priority") currentList = &mediumPriorityWords;
-        else if (line == "# Low Priority") currentList = &lowPriorityWords;
-        else if (!line.empty() && currentList) currentList->insert(line);
+        line.erase(line.find_last_not_of("\r\n") + 1); // Remove newlines
+        if (line == "# High Priority") {
+            currentList = &highPriorityWords;
+            std::cout << "[DEBUG] Loading High Priority Words.\n";
+        } else if (line == "# Medium Priority") {
+            currentList = &mediumPriorityWords;
+            std::cout << "[DEBUG] Loading Medium Priority Words.\n";
+        } else if (line == "# Low Priority") {
+            currentList = &lowPriorityWords;
+            std::cout << "[DEBUG] Loading Low Priority Words.\n";
+        } else if (!line.empty() && currentList != nullptr) {
+            currentList->insert(line.c_str());
+            std::cout << "[DEBUG] Inserted word: " << line << "\n";
+        }
     }
+
+    file.close();
 }
+
 // Helper function to split a string by spaces 
 void splitWords(const std::string& str, std::string words[], int& wordCount) {
     wordCount = 0;
     std::string currentWord;
+
     for (char c : str) {
         if (c == ' ') {
             if (!currentWord.empty()) {
                 words[wordCount++] = currentWord;
-                currentWord = "";
+                currentWord.clear();
             }
         } else {
-            currentWord += (c >= 'A' && c <= 'Z') ? c + 32 : c; // Convert to lowercase manually
+            currentWord += (c >= 'A' && c <= 'Z') ? c + 32 : c; // Convert to lowercase
         }
     }
     if (!currentWord.empty()) {
         words[wordCount++] = currentWord;
     }
+
+    std::cout << "[DEBUG] Split into words: ";
+    for (int i = 0; i < wordCount; ++i) {
+        std::cout << words[i] << " ";
+    }
+    std::cout << "\n";
 }
 
 void EmailList::loadSpamWords(const std::string& filePath) {
@@ -54,13 +74,41 @@ void EmailList::loadSpamWords(const std::string& filePath) {
         }
     }
 }
+void EmailList::insertSpamEmail(const Email& email) {
+    spamEmails.push(email); // Assuming spamEmails is a stack or queue
+    std::cout << "[DEBUG] Inserted spam email: " << email.sender << ", " << email.subject << "\n";
+}
 
 int EmailList::determinePriority(const std::string& text) {
-    if (highPriorityWords.contains(text)) return 1;
-    if (mediumPriorityWords.contains(text)) return 2;
-    if (lowPriorityWords.contains(text)) return 3;
-    return 0;
+    std::string words[100]; // Array to hold words
+    int wordCount = 0;
+
+    splitWords(text, words, wordCount);
+
+    std::cout << "\n[DEBUG] Checking priority for text: " << text << "\n";
+
+    for (int i = 0; i < wordCount; ++i) {
+        std::cout << "[DEBUG] Checking word: " << words[i] << "\n";
+
+        if (highPriorityWords.contains(words[i].c_str())) {
+            std::cout << "[DEBUG] Matched High Priority: " << words[i] << "\n";
+            return 1; // High priority
+        }
+        if (mediumPriorityWords.contains(words[i].c_str())) {
+            std::cout << "[DEBUG] Matched Medium Priority: " << words[i] << "\n";
+            return 2; // Medium priority
+        }
+        if (lowPriorityWords.contains(words[i].c_str())) {
+            std::cout << "[DEBUG] Matched Low Priority: " << words[i] << "\n";
+            return 3; // Low priority
+        }
+    }
+
+    std::cout << "[DEBUG] Defaulting to Low Priority.\n";
+    return 3; // Default to low priority
 }
+
+
 std::string toLower(const std::string& str) {
     std::string result;
     for (char c : str) {
@@ -73,47 +121,94 @@ std::string toLower(const std::string& str) {
     return result;
 }
 // Hardcoded spam phrases with different levels of "spamminess"
-std::string highSpamWords[] = {"urgent action required", "free gift", "claim your reward", "limited time offer"};
-std::string mediumSpamWords[] = {"exclusive discount", "special offer", "promotion", "cash prize"};
-std::string lowSpamWords[] = {"team building", "event invitation", "sale", "social event"};
+std::string highSpamWords[] = {"urgent", "action" ,"required", "free gift", "claim your reward", "limited time offer"};
+std::string mediumSpamWords[] = {"exclusive", "discount", "special", "offer", "promotion", "cash", "prize"};
+std::string lowSpamWords[] = {"team", "building", "event", "invitation", "sale", "social", "event"};
 
 bool EmailList::isSpam(const Email& email) {
     std::string combinedText = email.subject + " " + email.body;
     int spamScore = 0;
 
-    std::cout << "Checking email for spam:\nSubject: " << email.subject << "\nBody: " << email.body << "\n";
-
     for (const auto& word : highSpamWords) {
         if (combinedText.find(word) != std::string::npos) {
-            std::cout << "High-level spam keyword detected: " << word << "\n";
             spamScore += 3;
         }
     }
 
     for (const auto& word : mediumSpamWords) {
         if (combinedText.find(word) != std::string::npos) {
-            std::cout << "Medium-level spam keyword detected: " << word << "\n";
             spamScore += 2;
         }
     }
 
     for (const auto& word : lowSpamWords) {
         if (combinedText.find(word) != std::string::npos) {
-            std::cout << "Low-level spam keyword detected: " << word << "\n";
             spamScore += 1;
         }
     }
 
-    // Determine if the email is spam based on the accumulated spam score
-    if (spamScore >= 3) { 
-        spamEmails.push(email);
-        std::cout << "Email flagged as spam. Spam Score: " << spamScore << "\n";
+    if (spamScore >= 3) {
+        // Check if the email is already in the spam stack
+        EmailStack tempStack;
+        bool isDuplicate = false;
+
+        while (!spamEmails.isEmpty()) {
+            Email existingEmail = spamEmails.pop();
+            if (existingEmail.sender == email.sender &&
+                existingEmail.subject == email.subject &&
+                existingEmail.body == email.body &&
+                existingEmail.date == email.date) {
+                isDuplicate = true;
+            }
+            tempStack.push(existingEmail);
+        }
+
+        // Restore emails back to the spam stack
+        while (!tempStack.isEmpty()) {
+            spamEmails.push(tempStack.pop());
+        }
+
+        // If not duplicate, add to the spam stack
+        if (!isDuplicate) {
+            spamEmails.push(email);
+        }
+
         return true;
-    } else {
-        std::cout << "No spam keywords found in this email. Spam Score: " << spamScore << "\n";
-        return false;
+    }
+
+    return false;
+}
+void EmailList::deduplicateSpamEmails() {
+    EmailStack uniqueStack;
+    const int MAX_EMAILS = 1000; // Adjust based on your requirements
+    std::string seen[MAX_EMAILS];
+    int seenCount = 0;
+
+    while (!spamEmails.isEmpty()) {
+        Email email = spamEmails.pop();
+        std::string identifier = email.sender + email.subject + email.body + email.date;
+
+        // Check if identifier is already in the seen array
+        bool isDuplicate = false;
+        for (int i = 0; i < seenCount; ++i) {
+            if (seen[i] == identifier) {
+                isDuplicate = true;
+                break;
+            }
+        }
+
+        if (!isDuplicate) {
+            uniqueStack.push(email);
+            seen[seenCount++] = identifier; // Add to seen array
+        }
+    }
+
+    // Restore unique emails to the original stack
+    while (!uniqueStack.isEmpty()) {
+        spamEmails.push(uniqueStack.pop());
     }
 }
+
 void EmailList::searchEmails(const std::string& keyword) const {
     bool found = false;
     int count = 0;
@@ -189,12 +284,21 @@ void EmailList::displayPriorityEmails() {
 }
 
 void EmailList::displaySpamEmails() {
-    if (spamEmails.isEmpty()) {
-        std::cout << "No spam emails detected.\n";
-        return;
+    deduplicateSpamEmails(); // Ensure no duplicates
+
+    EmailStack tempStack;
+    while (!spamEmails.isEmpty()) {
+        Email email = spamEmails.pop();
+        tempStack.push(email);
+
+        std::cout << "Sender: " << email.sender << ", Subject: " << email.subject
+                  << "Body: " << email.body << ", Date: " << email.date << "\n";
     }
-    std::cout << "Displaying spam emails:\n";
-    displayStack("Spam Emails", spamEmails);  
+
+    // Restore spam emails back to the stack
+    while (!tempStack.isEmpty()) {
+        spamEmails.push(tempStack.pop());
+    }
 }
 
 void EmailList::displayInbox() { displayStack("Inbox", inbox); }
